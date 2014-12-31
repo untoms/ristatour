@@ -130,7 +130,7 @@ $idhotel=$_GET['idhotel'];
                                     <tr>
                                         <td><h2>Data Hotel</h2></td>
                                     </tr>
-                                    <?php  $cetakhotel=mysql_fetch_array($queryhotel))?>
+                                    <?php  $cetakhotel=mysql_fetch_array($queryhotel)?>
                                     <tr>
                                         <td><h3><?php echo $cetakhotel['nama_hotel']?></h3></td>
                                     </tr>
