@@ -4,8 +4,7 @@
     include('database/config.php');
     session_start();
     if (isset($_SESSION['username']) and isset ($_SESSION['password'])) {
-        header('location:index.php');
-        
+        header('location:index.php');        
         }
     include('header.php');
  // memanggil script class
@@ -72,6 +71,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <script type="text/javascript" src="js/keyboard.js" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/keyboard.css">
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
@@ -96,19 +97,25 @@
     <section id="registration" class="container">
 
         <form class="center" method='post' action="loginproses.php">
+            <h1>Silahkan Masuk</h1>
+            <h4>Gunakan akun yang sudah dibuat sebelumnya.</h4>
             <fieldset class="registration-form">
-                <h3>LOGIN</h3>
-                <div class="form-group">
-                    <?php if (isset($_SESSION['errorlogin'])){ echo $_SESSION['errorlogin'];}?></br>
-                    <input type="text" id="email" name="username" placeholder="Username"
-                           class="form-control" onkeypress="return runScript(event) ">
-                </div>
+                
+                <?php 
+                    if (isset($_SESSION['errorlogin'])){
+                         echo "<div style ='color:red'> ".$_SESSION['errorlogin']."</div>"; 
+                        }
+                    ?></br> 
+                    <div class="form-group">                                        
+                        <input type="text" id="email" name="username" placeholder="Username"
+                               class="form-control" onkeypress="return runScript(event) " required>
+                    </div>                    
+                
                 <div class="form-group">
                     <input type="password" id="password" name="password" placeholder="Password"
-                           class="form-control">
+                           class="keyboardInputCenter">
                 </div>
-                <?php // menampilkan kode captcha berisi soal matematika
-                   $captcha1->showcaptcha(); ?>
+                <?php $captcha1->showcaptcha(); ?>
                 <div class="form-group">
                     <input type="text" id="captcha" name="captcha" placeholder="Result"
                            class="form-control" >

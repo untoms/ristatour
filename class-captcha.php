@@ -10,7 +10,7 @@ class mathcaptcha
 
     function initial()
     {
-        $listoperator = array('+','-');
+        $listoperator = array('ditambah','dikurang');
         $this->bil1 = rand(0, 99);
         $this->bil2 = rand(0, 9);
         $this->operator = $listoperator[rand(0, 1)];
@@ -20,8 +20,8 @@ class mathcaptcha
     {
         $this->initial();
 
-        if ($this->operator == '+') $hasil = $this->bil1 + $this->bil2;
-        else if ($this->operator == '-') $hasil = $this->bil1 - $this->bil2;
+        if ($this->operator == 'ditambah') $hasil = $this->bil1 + $this->bil2;
+        else if ($this->operator == 'dikurang') $hasil = $this->bil1 - $this->bil2;
         $_SESSION['kode'] = $hasil;
     }
 

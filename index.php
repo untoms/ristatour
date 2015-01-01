@@ -33,11 +33,11 @@ include('database/config.php');
     <!--/header-->
     <?php
     include('header.php');
-    if(!isset($_GET['halaman'])){include('slider.php');
-    include('menu-bus.php');
-    }
-    else if($halaman=='tour'){
-    include('detail-paket.php');
+    if(!isset($_GET['halaman'])){
+        include('slider.php');
+        include('menu-bus.php');
+    }else if($halaman=='tour'){
+        include('detail-paket.php');
     }
     else if($halaman=='hotel'){
     include('hotel.php');

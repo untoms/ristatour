@@ -1,12 +1,14 @@
 <?php
-session_start();
-$namalengkap=$_POST['nama'];
-$alamat=$_POST['alamat'];
-$_SESSION["namalengkap"]=$namalengkap;
-$_SESSION["alamat"]=$alamat;
-//error_reporting(0);
-include('database/config.php');
-
+    session_start();
+    $namalengkap=$_POST['nama'];
+    $alamat=$_POST['alamat'];
+    $_SESSION["namalengkap"]=$namalengkap;
+    $_SESSION["alamat"]=$alamat;
+    error_reporting(0);
+    include('database/config.php');
+    include 'class-captcha.php';
+    $captcha2 = new mathcaptcha();
+           
 //$password=md5($_POST['password']);
 //$password_confirm=md5($_POST['password_confirm']);
 
@@ -21,7 +23,7 @@ $cek_query_hasil1=mysql_num_rows($cek_query1);
 //CEK USERNAME
 if(empty($_POST['username'])){
 	header('location:registrasi.php');
-	$_SESSION["empty_username"]=" Username harus diisi";	
+	$_SESSION["empty_username"]="Username harus diisi";	
 }
 
 if (isset($_POST['username']) and $cek_query_hasil>0){
@@ -52,22 +54,20 @@ header('location:registrasi.php');
 $_SESSION["invalid_email"]=" email yang anda masukkan tidak valid";
 }
 
-//Cek nomor telepon
-
- 
+//Cek nomor telepon 
 if( $_POST['phone'] != "" ){
-if( !is_numeric($_POST['phone']) ){
-header('location:registrasi.php');
-$_SESSION["fail_phone"]=" Inputan harus angka";
-}else{
+    if( !is_numeric($_POST['phone']) ){
+        header('location:registrasi.php');
+        $_SESSION["fail_phone"]=" Inputan harus angka";                
+        }else{
 //header('location:registrasi.php');
-
-$_SESSION["success_phone"]=$_POST['phone'];
-}
+    $_SESSION["success_phone"]=$_POST['phone'];
+    
+    }
+    
 }else{
-header('location:registrasi.php');
-
-$_SESSION["empty_phone"]=" Nomor telepon tidak boleh kosong";
+    header('location:registrasi.php');
+    $_SESSION["empty_phone"]=" Nomor telepon tidak boleh kosong";
 }
 
 //Cek Password
@@ -94,7 +94,25 @@ if($_POST['password']!= ($_POST['password_confirm'])){
 
 	header('location:registrasi.php');
 	$_SESSION['incorect_password'];
-}
+}   
+
+//    cek captcha
+    if (empty($_POST['captcha2'])) {
+        header('location:registrasi.php');
+        $_SESSION["empty_captcha"]=" Harus diisi!";
+        die();	
+//        unset($_SESSION['kode']);
+    }else if( !is_numeric($_POST['captcha2']) ){
+        header('location:registrasi.php');
+        $_SESSION["num_captcha"]=" Inputan harus angka!";   
+        die();         
+//        unset($_SESSION['kode']);
+    }else if($_POST['cap'] != $_POST['captcha2']){ 
+        header('location:registrasi.php');
+        $_SESSION['fail_captcha']=" Hasil salah!"; 
+        die();        
+//        unset($_SESSION['kode']);
+    } 
 
 //Query
 if (isset ($_SESSION['pass_medium']) or isset ($_SESSION['pass_strong'])){
@@ -112,25 +130,34 @@ if (isset($_SESSION['username_valid']) AND
 	$email=$_POST['email'];
 	$phone=$_POST['phone'];
 	$password=md5($_POST['password']);
-	$regis_query=mysql_query("INSERT INTO user (`username`,`nama_lengkap`,`alamat`,`phone`,`password`,`email`,`role_id`,`status`)
-										VALUES ('$username',
-												'$namalengkap',
-												'$alamat',
-												'$phone',
-												'$password',
-												'$email',
-												'2',
-												'1'
-												)");
+	$regis_query=mysql_query("INSERT INTO user (
+            `username`,
+            `nama_lengkap`,
+            `alamat`,
+            `phone`,
+            `password`,
+            `email`,
+            `role_id`,
+            `status`)
+            VALUES (
+            '$username',
+                '$namalengkap',
+                    '$alamat',
+                        '$phone',
+                            '$password',
+                                '$email',
+                                    '2',
+                                    '1'
+                                    )");
 												
 	if ($regis_query == FALSE){
 		echo "Registrasi gagal ".(mysql_error())."</p>";
 		header('location:log in.php');
-		} else {
-		header('location:index.php');
+            } else {
+                header('location:index.php');
 		$_SESSION['register_valid']="Registrasi sukses";
 		session_destroy();	
-	}
+            }
 	}
 
 

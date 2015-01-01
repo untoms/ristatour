@@ -83,7 +83,7 @@
                                     <table id="example2" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID Pelanggan</th>
+                                                <th>ID Admin</th>
                                                 <th>Username</th>
                                                 <th>Nomor Telepon</th>
                                                 <th>Email</th>

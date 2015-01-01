@@ -3,6 +3,10 @@ session_start();
 error_reporting(0); 
 $halaman=$_GET['halaman'];
 include('../database/config.php');
+    if (!isset($_SESSION['username']) and !isset ($_SESSION['password'])) {
+        $_SESSION["errorlogin"]="Anda harus login dahulu.";
+        header('location:../log in.php');        
+        }
 ?>
 <!DOCTYPE html>
 <html>

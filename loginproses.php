@@ -120,7 +120,7 @@
             }
             
         }else {
-            echo 'tunggu selama 10 detik hingga redirect ke halaman login...';
+            echo 'Anda telah gagal login 3 kali, tunggu selama 10 detik hingga redirect ke halaman login...';
             echo '<meta http-equiv="refresh" content="10;log in.php?a=1"></meta>';
 //            $tunggu=time()+10;
 //            $salah="salah";
