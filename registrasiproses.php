@@ -4,10 +4,10 @@
     $alamat=$_POST['alamat'];
     $_SESSION["namalengkap"]=$namalengkap;
     $_SESSION["alamat"]=$alamat;
-    error_reporting(0);
+    error_reporting(E_ALL);
     include('database/config.php');
-    include 'class-captcha.php';
-    $captcha2 = new mathcaptcha();
+    include 'kripto.php';
+    $crypt = new kriptograpi();
            
 //$password=md5($_POST['password']);
 //$password_confirm=md5($_POST['password_confirm']);
@@ -129,7 +129,7 @@ if (isset($_SESSION['username_valid']) AND
 	$username=$_POST['username'];
 	$email=$_POST['email'];
 	$phone=$_POST['phone'];
-	$password=md5($_POST['password']);
+	$password=$crypt->encryptDecrypt('eskade',$_POST['password'],false);
 	$regis_query=mysql_query("INSERT INTO user (
             `username`,
             `nama_lengkap`,

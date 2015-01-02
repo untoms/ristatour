@@ -2,10 +2,11 @@
     error_reporting(0);
     include('database/config.php');
     include 'class-captcha.php';
-        // membuat obyek class
+    include 'kripto.php';
+    $crypt = new kriptograpi();
     $captcha1 = new mathcaptcha();
     $username=$_POST['username'];
-    $password=md5($_POST['password']);
+    $password=$crypt->encryptDecrypt('eskade',$_POST['password'],false);
 
     $_IP_SERVER = $_SERVER['SERVER_ADDR'];
     $_IP_ADDRESS = $_SERVER['REMOTE_ADDR']; 

@@ -1,11 +1,15 @@
 <?php
-$id = $_POST['idpesan'];
-$nama = $_POST['username'];
-$namapaket = $_POST['namapaket'];
-$harga = $_POST['hargapaket'];
-$tanggal = $_POST['tanggal_mulai'];
+include 'kripto.php';
+    $crypt = new kriptograpi();
+$id = $crypt->encryptDecrypt('eskade',$_POST['idpesan'],false);
+$nama = $crypt->encryptDecrypt('eskade',$_POST['username'],false);
+$namapaket = $crypt->encryptDecrypt('eskade',$_POST['namapaket'],false);
+$harga = $crypt->encryptDecrypt('eskade',$_POST['hargapaket'],false);
+$tanggal = $crypt->encryptDecrypt('eskade',$_POST['tanggal_mulai'],false);
 
 require_once("dompdf/dompdf_config.inc.php");
+
+$gabung =$id.$nama.$namapaket.$harga.$tanggal;
 
 $html =
   '<html><body>'.
@@ -44,5 +48,6 @@ $html =
 $dompdf = new DOMPDF();
 $dompdf->load_html($html);
 $dompdf->render();
-$dompdf->stream('bukti_bayar_'.$nama.'.pdf');
+//$dompdf->stream('bukti_bayar_'.$nama.'.pdf');
+echo hash_hmac_file("md5", $dompdf->stream('bukti_bayar_'.$nama.'.pdf'), "secret");
 ?>
